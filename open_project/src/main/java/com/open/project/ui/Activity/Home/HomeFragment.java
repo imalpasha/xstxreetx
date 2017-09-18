@@ -28,6 +28,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tagmanager.TagManager;
+import com.google.maps.android.clustering.ClusterManager;
 import com.open.project.R;
 import com.open.project.application.MainApplication;
 import com.open.project.base.BaseFragment;
@@ -63,6 +65,7 @@ import com.open.project.utils.Utils;
 import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -107,6 +110,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
     //MixpanelAPI mixPanel;
     Realm realm;
     private GoogleMap mMap;
+    private ClusterManager<LatLong> mClusterManager;
 
     public static HomeFragment newInstance() {
 
@@ -175,6 +179,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
             }
         });
 
+
         searchBarBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -202,14 +207,50 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         return main;
     }
 
+    // Declare a variable for the cluster manager.
+
+    private void setUpClusterer() {
+        // Position the map.
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(2.919553, 101.657757), 20));
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+        mClusterManager = new ClusterManager<LatLong>(getActivity(), mMap);
+        mClusterManager.setAnimation(true);
+
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        mMap.setOnCameraIdleListener(mClusterManager);
+        mMap.setOnMarkerClickListener(mClusterManager);
+
+        // Add cluster items (markers) to the cluster manager.
+        addItems();
+    }
+
+    private void addItems() {
+
+        // Set some lat/lng coordinates to start with.
+        double lat = 2.919553;
+        double lng = 101.657757;
+
+        // Add ten cluster items in close proximity, for purposes of this example.
+        for (int i = 0; i < 50; i++) {
+            double offset = i / 60d;
+            lat = lat + offset;
+            lng = lng + offset;
+            LatLong offsetItem = new LatLong(lat, lng, "Title" + i, "Snippet" + i);
+            mClusterManager.addItem(offsetItem);
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        setUpMap();
+        setUpClusterer();
+        //setUpMap();
     }
 
-    public void setUpMap() {
+    /*public void setUpMap() {
 
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setZoomControlsEnabled(false);
@@ -218,7 +259,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         MarkerOptions marker;
 
         // Updates the location and zoom of the MapView
-        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble("1.000000"), Double.parseDouble("1.000000")), 10);
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(new LatLng(Double.parseDouble("2.919553"), Double.parseDouble("101.657757")), 10);
         mMap.animateCamera(cameraUpdate);
 
         final HashMap<String, Integer> mMarkers = new HashMap<String, Integer>();
@@ -227,7 +268,8 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
             final int currentLoop = count;
             marker = new MarkerOptions();
             // marker.snippet(Integer.toString(count));
-            Marker mkr = mMap.addMarker(marker.position(new LatLng(Double.parseDouble("1.000000"), Double.parseDouble("2.000000"))).title("Test Store"));
+
+            Marker mkr = mMap.addMarker(marker.position(new LatLng(Double.parseDouble(lat.get(count)), Double.parseDouble(lng.get(count)))).title("Test Store"));
             mMarkers.put(mkr.getId(), count);
 
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -243,7 +285,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
 
             });
 
-            /*aq.id(R.id.navigationIcon).clicked(new View.OnClickListener()
+            aq.id(R.id.navigationIcon).clicked(new View.OnClickListener()
             {
                 @Override
                 public void onClick(View v)
@@ -252,10 +294,10 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
                     Utils.launchNavigator(getActivity(), URL);
 
                 }
-            });*/
+            });
         }
 
-    }
+    }*/
 
     @Override
     public void onResume() {
