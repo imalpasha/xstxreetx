@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/grey_background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/login_backImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/login_page_background" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,19 +28,10 @@
         android:weightSum="1">
 
         <!--LOGO-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.2"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-
-
-        </LinearLayout>
 
         <!--Content-->
         <LinearLayout
+            android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginLeft="20dp"
@@ -38,7 +43,7 @@
 
             <!--White box-->
             <LinearLayout
-                android:id="@+id/loginBox"
+                android:id="@+id/continueBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/login_white_box"
@@ -46,6 +51,7 @@
                 android:orientation="vertical"
                 android:paddingBottom="5dp"
                 android:paddingLeft="10dp"
+                android:alpha="0"
                 android:paddingRight="10dp"
                 android:paddingTop="20dp">
 
@@ -57,6 +63,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/login_box"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:weightSum="1">
 
                     <com.open.project.utils.FontStyle.PlayEditText
@@ -84,6 +91,7 @@
                     android:layout_marginTop="5dp"
                     android:background="@drawable/login_box"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:weightSum="1">
 
                     <com.open.project.utils.FontStyle.PlayEditText
@@ -104,23 +112,36 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/btnLogin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="5dp"
-                    android:background="@drawable/red_main_btn"
                     android:clickable="true"
+                    android:orientation="vertical"
                     android:weightSum="1">
 
                     <com.open.project.utils.FontStyle.PlayTextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/accent_A100"
                         android:gravity="center"
                         android:padding="15dp"
-                        android:text="@string/login_"
+                        android:text="Test Homepage"
+                        android:id="@+id/btnLogin"
+                        android:textColor="@color/white"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+
+                    <com.open.project.utils.FontStyle.PlayTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:background="@color/blue"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:text="Facebook Button Here"
                         android:textColor="@color/white"
                         android:textSize="17dp"
                         android:textStyle="bold" />
@@ -134,6 +155,7 @@
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
                     android:clickable="true"
+                    android:visibility="gone"
                     android:weightSum="1">
 
                     <com.open.project.utils.FontStyle.PlayTextView
@@ -151,6 +173,61 @@
             </LinearLayout>
 
             <!--Black box-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/login_black_box"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.6"
+                    android:weightSum="1">
+
+                    <com.open.project.utils.FontStyle.PlayTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="Sign Up"
+                        android:textColor="@color/white"
+                        android:textSize="14dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/sign_up"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="0.4"
+                    android:background="@drawable/button_right_line"
+                    android:clickable="true"
+                    android:weightSum="1">
+
+                    <com.open.project.utils.FontStyle.PlayTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:padding="15dp"
+                        android:text="Sign Up"
+                        android:textColor="@color/white"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
         </LinearLayout>
 

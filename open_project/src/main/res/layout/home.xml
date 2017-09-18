@@ -14,13 +14,20 @@
         android:layout_height="match_parent"
         tools:context=".ui.Activity.Home.HomeActivity" />
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/charcoal_start_transparent"
         android:gravity="center|top"
         android:orientation="vertical"
         android:weightSum="1">
+
+        <LinearLayout
+            android:id="@+id/searchList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/red_btn_bg_pressed_color"
+            android:orientation="vertical"></LinearLayout>
 
         <LinearLayout
             android:id="@+id/searchBarLayout"
@@ -55,14 +62,7 @@
                 android:hint="Search food or places"/>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/searchList"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/red_btn_bg_pressed_color"
-            android:orientation="vertical"></LinearLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
     <ImageView
         android:id="@+id/advancedSearchBtn"

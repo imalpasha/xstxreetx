@@ -1,6 +1,7 @@
 package com.open.project.ui.Activity.Login;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -11,12 +12,14 @@ import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.open.project.R;
 import com.open.project.application.MainApplication;
 import com.open.project.base.BaseFragment;
 import com.open.project.MainController;
 import com.open.project.MainFragmentActivity;
+import com.open.project.ui.Activity.Home.HomeActivity;
 import com.open.project.ui.Presenter.LoginPresenter;
 import com.open.project.utils.SharedPrefManager;
 
@@ -66,8 +69,9 @@ public class LoginFragment extends BaseFragment implements Validator.ValidationL
     @Inject
     Bus bus;
 
-    @Bind(R.id.loginBox)
-    LinearLayout loginBox;
+
+    @Bind(R.id.continueBox)
+    LinearLayout continueBox;
 
     @NotEmpty(sequence = 1, messageResId = R.string.email_empty)
     @Email(sequence = 2, messageResId = R.string.email_invalid)
@@ -81,7 +85,7 @@ public class LoginFragment extends BaseFragment implements Validator.ValidationL
     EditText txtLoginPassword;
 
     @Bind(R.id.btnLogin)
-    LinearLayout btnLogin;
+    TextView btnLogin;
 
     private SharedPrefManager pref;
 
@@ -143,6 +147,7 @@ public class LoginFragment extends BaseFragment implements Validator.ValidationL
         animationSet.addAnimation(fadeIn);
         loginBox.startAnimation(animationSet);*/
 
+        continueBox.animate().alpha(1.0f).setDuration(1200);
         realm = RealmObjectController.getRealmInstance(act);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
@@ -150,7 +155,10 @@ public class LoginFragment extends BaseFragment implements Validator.ValidationL
             public void onClick(View v) {
 
                 hideKeyboard();
-                mValidator.validate();
+                //mValidator.validate();
+                Intent startHome = new Intent(getActivity(), HomeActivity.class);
+                getActivity().startActivity(startHome);
+
             }
         });
 

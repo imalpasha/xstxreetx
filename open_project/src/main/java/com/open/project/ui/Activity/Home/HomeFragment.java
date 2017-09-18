@@ -3,7 +3,9 @@ package com.open.project.ui.Activity.Home;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -157,6 +159,8 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
                     searchList.animate().alpha(1.0f).setDuration(1000);
                     searchBarBack.setVisibility(View.VISIBLE);
                     searchBarLayout.setGravity(0);
+                    //searchList.animate().alpha(1.0f).setDuration(1000);
+
                     /*view.animate()
                     .translationY(view.getHeight())
                     .alpha(0.0f)
@@ -195,10 +199,11 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
             @Override
             public void onClick(View view) {
 
-                FragmentManager fm = getActivity().getSupportFragmentManager();
+                showDialog();
+                /*FragmentManager fm = getActivity().getSupportFragmentManager();
                 AdvanceSearchFragment advanceSearchFragment = AdvanceSearchFragment.newInstance();
                 advanceSearchFragment.setTargetFragment(HomeFragment.this, 0);
-                advanceSearchFragment.show(fm, "advance_search");
+                advanceSearchFragment.show(fm, "advance_search");*/
 
             }
         });
@@ -207,11 +212,25 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         return main;
     }
 
+
+    private void showDialog() {
+
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        Fragment previous = getActivity().getSupportFragmentManager().findFragmentByTag(AdvanceSearchFragment.class.getName());
+        if (previous != null) {
+            fragmentTransaction.remove(previous);
+        }
+        fragmentTransaction.addToBackStack(null);
+
+        AdvanceSearchFragment dialog = new AdvanceSearchFragment();
+        dialog.show(fragmentTransaction, AdvanceSearchFragment.class.getName());
+    }
+
     // Declare a variable for the cluster manager.
 
     private void setUpClusterer() {
         // Position the map.
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(2.919553, 101.657757), 20));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(2.919553, 101.657757), 5));
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)

@@ -45,7 +45,8 @@ public class AdvanceSearchFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.MY_DIALOG);
+        //setStyle(DialogFragment.STYLE_NORMAL, R.style.DialogAnimation);
+
     }
 
     @Override
@@ -58,6 +59,12 @@ public class AdvanceSearchFragment extends DialogFragment {
             d.getWindow().setLayout(width, height);
         }
     }
+
+    @Override
+    public int getTheme() {
+        return R.style.DialogAnimation;
+    }
+
 
     private ArrayList<SimpleSectionedListAdapter.Section> sections = new ArrayList<SimpleSectionedListAdapter.Section>();
 
