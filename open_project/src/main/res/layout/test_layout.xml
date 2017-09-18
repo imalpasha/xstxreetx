@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/advanceSearchTopLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.open.project.ui.Activity.ObserveableScrollView
+            android:id="@+id/scroll"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/blue"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginTop="160dp"
+                    android:text="ABCDEDCAFASD ASD SA DSA DSA DSA DSA SAD SADAS Da sd
+                    as d
+                    asda sd
+                    sa d
+                    sa d
+                    sa
+                     dsa
+                      d
+                      sad
+                      sa
+                       dsa
+                        d
+                        sa d
+                        sa d
+                        sa
+                        as
+                        das
+                        d
+                        asd
+                        asd
+                        as
+                        da
+                        sd
+                        asd
+                        as
+                        das
+                        d
+                        asd
+                        as
+                        das
+                        das
+                        d
+                        asd
+                        asd
+                        as
+                        das
+                        d
+                        sad
+                        asd
+                        asd
+                        as
+                        das
+                        d
+                        asd
+                        asd
+                        as
+                        dsa
+                        das
+                        d
+                        fd
+                        gdf
+                        g
+                        fdh
+                        gf
+                        hgf
+                        hgf
+                        hgf
+                        hgf
+                        h
+                        gfh
+                        gfh
+                        gf
+                        h
+                        ghj
+
+                        ds
+                        ad
+                        sad
+                        sa
+                         dsa
+                         d as
+                         d
+                         sa
+                          das
+                           dsa
+                           d
+                           sad
+                            sa
+                             d
+                             sd
+                             sfsd fdsf
+                             dsf
+                             ds
+                             f sd
+                             f
+                             sdf
+                              ds
+                              f ds
+                              f
+                              ds
+                              f sd
+                              f
+                              ds f
+                              ds
+                              f sd
+                              f
+                              sd
+                              f ds
+                              f
+                              sd f
+                              f
+                              g
+                              fdg
+                              fdg
+                              fdg
+                              fd
+                              gf
+                              gfd
+                               asd
+                               as
+                               dsa
+                                dsa
+                                 d
+                                 sad
+                                 sad
+                                 sa
+                                 dsa
+                                 ds
+                                 ad
+                                 sa
+                                 d sa
+                                 d as
+                                  d
+                                  sad
+                                   sad
+                                    sa
+                                     dsa
+                                      d
+                                      sad
+                                      sa
+                                      d sa
+                                      d
+                                      sad
+                                      sa
+                                      d sa
+                                       d
+                                       sa d
+                                       sa d
+                                       sa
+                                       d sa
+                                       d
+                                       sad
+                                        sa
+                                        d sa
+                                        d sa
+                                        d
+                                        sa
+                                        d sa
+                                        das
+                                        d
+                                        as
+                                        dsa
+
+                                        as
+                                         dsa
+                                          d
+                                          sa d
+                                          sa
+                                          d
+                              g
+                              fdg
+                              fd g
+                              fd
+                              gAS DSAD SA" />
+
+            </LinearLayout>
+
+
+        </com.open.project.ui.Activity.ObserveableScrollView>
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@color/gray_btn_bg_color"
+            android:src="@drawable/common_google_signin_btn_icon_dark_normal" />
+
+    </RelativeLayout>
+
+</LinearLayout>

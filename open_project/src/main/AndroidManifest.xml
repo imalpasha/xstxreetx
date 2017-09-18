@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.open.project">
+
+    <!-- master_2B-->
+
+    <uses-sdk
+        android:minSdkVersion="2"
+        android:targetSdkVersion="16"
+        tools:overrideLibrary="dmax.dialog" />
+
+    <uses-permission
+        android:name="android.permission.INTERNET"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_NETWORK_STATE"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.ACCESS_WIFI_STATE"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_STATE"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.CHANGE_NETWORK_STATE"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.VIBRATE"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"
+        android:protectionLevel="normal" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:protectionLevel="normal"
+        android:required="true" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:protectionLevel="normal" />
+
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+
+    <uses-permission
+        android:name="android.permission.CAMERA"
+        android:protectionLevel="normal" />
+
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:protectionLevel="normal" />
+
+    <!-- GCM requires a Google account. -->
+    <uses-permission
+        android:name="android.permission.GET_ACCOUNTS"
+        android:protectionLevel="normal" />
+
+    <permission
+        android:name="andoid.permission.READ_EXTERNAL_STORAGE"
+        android:protectionLevel="normal" />
+
+    <permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:protectionLevel="normal" />
+
+    <permission
+        android:name="android.permission.CAMERA"
+        android:protectionLevel="normal" />
+
+    <!-- Creates a custom permission so only this app can receive its messages. -->
+    <permission
+        android:name="com.open.project.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission
+        android:name="com.google.android.c2dm.permission.RECEIVE"
+        android:protectionLevel="signature" />
+
+    <application
+        android:name="com.open.project.application.MainApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/latest_logo"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:launchMode="singleTop"
+        android:theme="@style/MyCustomTheme"
+        android:vmSafeMode="true"
+        tools:replace="android:icon">
+
+        <activity
+            android:name=".ui.Activity.Splash.SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustPan">
+
+        </activity>
+
+        <activity
+            android:name=".ui.Activity.Login.LoginActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Design.NoActionBar"
+            android:windowSoftInputMode="adjustPan"></activity>
+
+        <activity
+            android:name=".ui.Activity.Home.HomeActivity"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
+        <!--<receiver
+            android:name=".TrackingReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name="com.google.android.gms.analytics.AnalyticsReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.analytics.ANALYTICS_DISPATCH" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name="com.google.android.gms.analytics.AnalyticsService"
+            android:enabled="true"
+            android:exported="false" />
+
+        <service android:name=".application.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name=".application.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service android:name="com.google.android.gms.tagmanager.InstallReferrerService" />
+    -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="@string/imal_google_map_api_key" />
+
+    </application>
+
+</manifest>
