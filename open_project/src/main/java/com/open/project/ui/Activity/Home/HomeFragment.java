@@ -1,48 +1,40 @@
 package com.open.project.ui.Activity.Home;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tagmanager.TagManager;
 import com.google.maps.android.clustering.ClusterManager;
 import com.open.project.R;
-import com.open.project.application.MainApplication;
 import com.open.project.base.BaseFragment;
-import com.open.project.MainController;
 import com.open.project.MainFragmentActivity;
 import com.open.project.ui.Activity.AdvanceSearch.AdvanceSearchFragment;
-import com.open.project.ui.Presenter.LoginPresenter;
-import com.open.project.utils.SharedPrefManager;
+import com.open.project.ui.Activity.SlidePage.SlidingTabLayout;
+import com.open.project.ui.Model.Adapter.ViewPagerAdapter;
+import com.open.project.ui.Model.LatLong;
 
 import com.open.project.ui.Model.Receive.LoginReceive;
-import com.open.project.ui.Model.Request.LoginRequest;
 
 import com.open.project.ui.Realm.Cached.CachedResult;
 import com.open.project.ui.Realm.RealmObjectController;
@@ -52,32 +44,18 @@ import com.facebook.FacebookException;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 */
-import com.google.firebase.analytics.FirebaseAnalytics;
 
 import com.google.gson.Gson;
 
 
-import com.mobsandgeeks.saripaar.ValidationError;
-import com.mobsandgeeks.saripaar.Validator;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Order;
-
 import com.open.project.utils.Utils;
-import com.squareup.otto.Bus;
-import com.squareup.otto.Subscribe;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.internal.Context;
 
 /**
  * This class allow user to log in the app
@@ -108,11 +86,17 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
     @Bind(R.id.searchBarLayout)
     LinearLayout searchBarLayout;
 
+    //SearchList Tab Section
+    int[] searchListTab = new int[]{R.string.list_food, R.string.list_place};
+    int searchListTabCount = 2;
 
     //MixpanelAPI mixPanel;
     Realm realm;
     private GoogleMap mMap;
     private ClusterManager<LatLong> mClusterManager;
+    private ViewPagerAdapter adapter;
+    private ViewPager pager;
+    private SlidingTabLayout tabs;
 
     public static HomeFragment newInstance() {
 
@@ -141,6 +125,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+        setData(main);
         // Gets the MapView from the XML layout and creates it
         //mapView.onCreate(savedInstanceState);
 
@@ -156,9 +141,11 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
                     //view.animate().translationY(view.getHeight());
                     //view.animate().alpha(1.0f);
                     //view.animate().translationY(0);
+                    pager.setVisibility(View.VISIBLE);
                     searchList.animate().alpha(1.0f).setDuration(1000);
                     searchBarBack.setVisibility(View.VISIBLE);
                     searchBarLayout.setGravity(0);
+                    searchBarLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white));
                     //searchList.animate().alpha(1.0f).setDuration(1000);
 
                     /*view.animate()
@@ -191,6 +178,7 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
                 searchBarBack.setVisibility(View.GONE);
                 searchBarLayout.setGravity(Gravity.CENTER);
                 searchBar.clearFocus();
+                //searchBarLayout.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.white_transparent));
                 Utils.hideKeyboard(getActivity(), main);
             }
         });
@@ -208,8 +196,98 @@ public class HomeFragment extends BaseFragment implements OnMapReadyCallback {
             }
         });
 
+        //ontouch home
+
+        /*final View activityRootView = main.findViewById(R.id.home_root);
+        activityRootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                int heightDiff = activityRootView.getRootView().getHeight() - activityRootView.getHeight();
+                if (heightDiff > dpToPx(getActivity(), 200)) { // if more than 200 dp, it's probably a keyboard...
+                    // ... do something here
+                    pager.setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                                hideKeyboard();
+
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                }
+            }
+        });
+
+        if (false) {
+
+        }*/
+
+        pager.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+
+                    hideKeyboard();
+
+                    return false;
+                }
+                return false;
+            }
+        });
+
 
         return main;
+    }
+
+    public static float dpToPx(Activity context, float valueInDp) {
+        DisplayMetrics metrics = context.getResources().getDisplayMetrics();
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, metrics);
+    }
+
+    public void setData(View view) {
+
+        adapter = new ViewPagerAdapter(getActivity().getSupportFragmentManager(), searchListTab, searchListTabCount, getActivity());
+
+        pager = (ViewPager) view.findViewById(R.id.pager);
+        pager.setAdapter(adapter);
+        pager.setOffscreenPageLimit(2);
+
+        // Assigning the Sliding Tab Layout View
+        tabs = (SlidingTabLayout) view.findViewById(R.id.tabs);
+
+        // To make the Tabs Fixed set this true, This makes the tabs Space Evenly in Available width
+        tabs.setDistributeEvenly(true);
+
+        tabs.setCustomTabView(R.layout.custom_tab, 0);
+
+        // Setting Custom Color for the Scroll bar indicator of the Tab View
+        tabs.setCustomTabColorizer(new SlidingTabLayout.TabColorizer() {
+            @Override
+            public int getIndicatorColor(int position) {
+                return ContextCompat.getColor(getContext(), R.color.default_theme_colour);
+            }
+        });
+
+        //hideLeftPart();
+
+        // Setting the ViewPager For the SlidingTabsLayout
+        tabs.setViewPager(pager);
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            public void onPageScrollStateChanged(int state) {
+            }
+
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            public void onPageSelected(int position) {
+
+            }
+        });
+
     }
 
 

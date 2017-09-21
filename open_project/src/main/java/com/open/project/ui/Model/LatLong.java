@@ -1,4 +1,4 @@
-package com.open.project.ui.Activity.Home;
+package com.open.project.ui.Model;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;

@@ -16,4 +16,8 @@
     <string name="password_rule">Must be at least 8 and maximum 16 characters</string>
     <string name="imal_google_map_api_key"><![CDATA[AIzaSyAJzD0WJmwEYW6eB6kZyfy3ZtUYC7Y9oMI]]></string>
 
+    <string name="list_food">FOOD</string>
+    <string name="list_place">PLACES</string>
+
+
 </resources>
